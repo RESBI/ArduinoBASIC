@@ -1,3 +1,10 @@
+Resbi:
+=============
+Add Serial keyboard support.
+But del PS2 keyboard support.
+Or you can turn on it again.
+<Default serial band:4800>
+
 Arduino Basic
 =============
 Now you can turn your Arduino into an 80's home computer!
