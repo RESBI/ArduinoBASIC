@@ -1,12 +1,20 @@
 #include "host.h"
 #include "basic.h"
 
+#define BackP 0x08
+#define ENTER 0x0D
+#define DELET 0x7F
+#define CTRLC 0x03
+#define CTRLH 0x08
+#define CTRLS 0x13
+#define CTRLX 0x18
+
 #include <SSD1306ASCII.h>
-#include <PS2Keyboard.h>
+//#include <PS2Keyboard.h>
 #include <EEPROM.h>
 
 extern SSD1306ASCII oled;
-extern PS2Keyboard keyboard;
+//extern PS2Keyboard keyboard;
 extern EEPROMClass EEPROM;
 int timer1_counter;
 
@@ -231,16 +239,17 @@ char *host_readLine() {
 
     bool done = false;
     while (!done) {
-        while (keyboard.available()) {
+        while (/*keyboard*/Serial.available()) {
             host_click();
             // read the next key
             lineDirty[pos / SCREEN_WIDTH] = 1;
-            char c = keyboard.read();
+            char c = /*keyboard*/Serial.read();
+            Serial.write(c);
             if (c>=32 && c<=126)
                 screenBuffer[pos++] = c;
-            else if (c==PS2_DELETE && pos > startPos)
+            else if (c==/*PS2_DELETE*/BackP && pos > startPos)
                 screenBuffer[--pos] = 0;
-            else if (c==PS2_ENTER)
+            else if (c==/*PS2_ENTER*/ENTER)
                 done = true;
             curX = pos % SCREEN_WIDTH;
             curY = pos / SCREEN_WIDTH;
@@ -280,10 +289,10 @@ char host_getKey() {
 }
 
 bool host_ESCPressed() {
-    while (keyboard.available()) {
+    while (/*keyboard*/Serial.available()) {
         // read the next key
-        inkeyChar = keyboard.read();
-        if (inkeyChar == PS2_ESC)
+        inkeyChar = /*keyboard*/Serial.read();
+        if (inkeyChar == CTRLC)
             return true;
     }
     return false;
@@ -431,4 +440,3 @@ bool host_saveExtEEPROM(char *fileName) {
 }
 
 #endif
-
