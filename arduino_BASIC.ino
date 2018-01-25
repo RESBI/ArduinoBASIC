@@ -1,7 +1,7 @@
 #include <font.h>
 #include <SSD1306ASCII.h>
 // ^ - modified for faster SPI
-#include <PS2Keyboard.h>
+//#include <PS2Keyboard.h>
 #include <EEPROM.h>
 
 #include "basic.h"
@@ -14,17 +14,16 @@
 
 // If using an external EEPROM, you'll also have to initialise it by
 // running once with the appropriate lines enabled in setup() - see below
-
 #if EXTERNAL_EEPROM
-#include <I2cMaster.h>
+#include <i2cmaster.h>
 // Instance of class for hardware master with pullups enabled
 TwiMaster rtc(true);
 #endif
 
 // Keyboard
-const int DataPin = 8;
-const int IRQpin =  3;
-PS2Keyboard keyboard;
+//const int DataPin = 8;
+//const int IRQpin =  3;
+//PS2Keyboard keyboard;
 
 // OLED
 #define OLED_DATA 9
@@ -48,7 +47,8 @@ const char welcomeStr[] PROGMEM = "Arduino BASIC";
 char autorun = 0;
 
 void setup() {
-    keyboard.begin(DataPin, IRQpin);
+//    keyboard.begin(DataPin, IRQpin);
+    Serial.begin(115200);
     oled.ssd1306_init(SSD1306_SWITCHCAPVCC);
 
     reset();
@@ -106,4 +106,3 @@ void loop() {
         host_outputProgMemString((char *)pgm_read_word(&(errorTable[ret])));
     }
 }
-
