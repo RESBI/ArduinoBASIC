@@ -48,7 +48,7 @@ char autorun = 0;
 
 void setup() {
 //    keyboard.begin(DataPin, IRQpin);
-    Serial.begin(115200);
+    Serial.begin(4800);
     oled.ssd1306_init(SSD1306_SWITCHCAPVCC);
 
     reset();
