@@ -1,8 +1,8 @@
 Resbi:
 =============
 Add Serial keyboard support.
-But del PS2 keyboard support.
-Or you can turn on it again.
+But deleted PS2 keyboard support.
+Or you can add it back.
 <Default serial band:4800>
 
 Arduino Basic
